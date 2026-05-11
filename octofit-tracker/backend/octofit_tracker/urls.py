@@ -76,4 +76,8 @@ router.register(r'workouts', WorkoutViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    # Root API endpoint that returns the API base URL using $CODESPACE_NAME
+    path('api/', lambda request: __import__('django.http').http.JsonResponse({
+        'api_base_url': f"https://{os.environ.get('CODESPACE_NAME', 'localhost')}-8000.app.github.dev/api/"
+    })),
 ]
